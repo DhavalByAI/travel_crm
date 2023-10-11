@@ -8,7 +8,6 @@ import 'package:travel_crm/widgets/sub_widgets/c_card.dart';
 import 'package:travel_crm/widgets/sub_widgets/cbutton.dart';
 import 'package:travel_crm/widgets/sub_widgets/ctext.dart';
 import 'package:travel_crm/widgets/sub_widgets/ctextfield_common.dart';
-
 import '../../core/utils/app_colors.dart';
 import '../../core/utils/fatch_api.dart';
 import '../../routes/app_routes.dart';
@@ -68,6 +67,8 @@ class LoginScreen extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: cTextFieldCommon(
+                            maxLines: 1,
+                            cursorColor: Colors.white,
                             controller: email,
                             fontColor: Colors.white,
                           ),
@@ -92,6 +93,8 @@ class LoginScreen extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: cTextFieldCommon(
+                            maxLines: 1,
+                            cursorColor: Colors.white,
                             controller: password,
                             fontColor: Colors.white,
                           ),
@@ -150,7 +153,7 @@ class LoginScreen extends StatelessWidget {
                                       box.put('userId', value['data']['id']),
                                       box.put('role', value['data']['role']),
                                       dio.options.headers["Authorization"] =
-                                          "Bearer " + value['data']['token'],
+                                          "Bearer ${value['data']['token']}",
                                       Get.offAllNamed(AppRoutes.dashboard)
                                     }
                                   else

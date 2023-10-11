@@ -17,6 +17,7 @@ class cTextFieldCommon extends StatefulWidget {
   int? maxLines;
   int? maxLength;
   Function()? onTap;
+  Color? cursorColor;
   List<TextInputFormatter>? textInputFormatter;
   Function()? onEditingComplete;
   TextCapitalization textCapitalization;
@@ -34,6 +35,7 @@ class cTextFieldCommon extends StatefulWidget {
       this.onTap,
       this.maxLines,
       this.maxLength,
+      this.cursorColor,
       this.onEditingComplete,
       this.textInputFormatter,
       this.textCapitalization = TextCapitalization.none,
@@ -59,6 +61,7 @@ class _cTextFieldCommonState extends State<cTextFieldCommon> {
         },
         maxLength: widget.maxLength,
         maxLines: widget.maxLines,
+        cursorColor: widget.cursorColor,
         maxLengthEnforcement: MaxLengthEnforcement.truncateAfterCompositionEnds,
         controller: widget.controller,
         keyboardType: widget.textInputType,

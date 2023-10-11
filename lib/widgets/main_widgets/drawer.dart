@@ -30,36 +30,32 @@ class _CDrawerState extends State<CDrawer> {
             Get.toNamed(AppRoutes.dashboard);
           }),
       DrawerTile(
-          icon: IconConstant.accounts,
-          title: "Accounts",
-          isDropDown: true,
-          items: [
-            DrawerTile(
-                icon: IconConstant.dashboard,
-                title: "Category",
-                onPressed: () {}),
-            DrawerTile(
-                icon: IconConstant.moneyPink,
-                title: "Bank/Cash",
-                onPressed: () {
-                  Get.back();
-                  Get.toNamed(AppRoutes.bankCashScreen);
-                }),
-          ],
-          onPressed: () {}),
-      DrawerTile(
           icon: IconConstant.customer,
-          title: "Customer",
+          title: "Customers",
           onPressed: () {
             Get.back();
             Get.toNamed(AppRoutes.query);
           }),
       DrawerTile(
+          icon: IconConstant.customer,
+          title: "Visa",
+          onPressed: () {
+            // Get.back();
+            // Get.toNamed(AppRoutes.query);
+          }),
+      DrawerTile(
+          icon: IconConstant.customer,
+          title: "Today's Work",
+          onPressed: () {
+            // Get.back();
+            // Get.toNamed(AppRoutes.query);
+          }),
+      DrawerTile(
           icon: IconConstant.confirmCalender,
-          title: "Confirm Booking",
+          title: "Bookings",
           onPressed: () {
             Get.back();
-            Get.toNamed(AppRoutes.dashboard);
+            // Get.toNamed(AppRoutes.dashboard);
           }),
       DrawerTile(
           icon: IconConstant.itinerary,
@@ -67,6 +63,37 @@ class _CDrawerState extends State<CDrawer> {
           onPressed: () {
             Get.back();
             Get.toNamed(AppRoutes.itinerary);
+          }),
+      DrawerTile(
+          icon: IconConstant.moneyPink,
+          title: "Announcement",
+          onPressed: () {
+            Get.back();
+            Get.toNamed(AppRoutes.annScreen);
+          }),
+      // DrawerTile(
+      //     icon: IconConstant.accounts,
+      //     title: "Marketing",
+      //     isDropDown: true,
+      //     items: [
+      //       DrawerTile(
+      //           icon: IconConstant.dashboard,
+      //           title: "Bulk SMS",
+      //           onPressed: () {}),
+      //       DrawerTile(
+      //           icon: IconConstant.moneyPink,
+      //           title: "Bulk Email",
+      //           onPressed: () {
+      //             Get.back();
+      //           }),
+
+      //     ],
+      //     onPressed: () {}),
+      DrawerTile(
+          icon: IconConstant.settings,
+          title: "Mailbox",
+          onPressed: () {
+            Get.back();
           }),
       DrawerTile(
           icon: IconConstant.settings,
@@ -77,28 +104,60 @@ class _CDrawerState extends State<CDrawer> {
           }),
       DrawerTile(
           icon: IconConstant.reports,
+          title: "Price List",
+          isDropDown: true,
+          items: [
+            DrawerTile(
+                icon: IconConstant.dashboard,
+                title: "Hotel Price",
+                onPressed: () {
+                  Get.back();
+                  Get.toNamed(AppRoutes.hotelPrice);
+                }),
+            DrawerTile(
+                icon: IconConstant.moneyPink,
+                title: "Activity Price",
+                onPressed: () {}),
+            DrawerTile(
+                icon: IconConstant.moneyPink,
+                title: "Visa Price",
+                onPressed: () {}),
+            DrawerTile(
+                icon: IconConstant.moneyPink,
+                title: "Tour/Transfer Price",
+                onPressed: () {}),
+          ],
+          onPressed: () {
+            Get.back();
+          }),
+      DrawerTile(
+          icon: IconConstant.reports,
           title: "Reports",
           isDropDown: true,
           items: [
             DrawerTile(
                 icon: IconConstant.dashboard,
-                title: "Category",
+                title: "Acitivity Report",
                 onPressed: () {}),
             DrawerTile(
                 icon: IconConstant.moneyPink,
-                title: "Bank/Cash",
+                title: "Profit/Loss Report",
+                onPressed: () {}),
+            DrawerTile(
+                icon: IconConstant.moneyPink,
+                title: "Ledger Report",
+                onPressed: () {}),
+            DrawerTile(
+                icon: IconConstant.moneyPink,
+                title: "Agent Report",
+                onPressed: () {}),
+            DrawerTile(
+                icon: IconConstant.moneyPink,
+                title: "Tour Report",
                 onPressed: () {}),
           ],
           onPressed: () {
             Get.back();
-            Get.toNamed(AppRoutes.dashboard);
-          }),
-      DrawerTile(
-          icon: IconConstant.notification,
-          title: "Notifications",
-          onPressed: () {
-            Get.back();
-            Get.toNamed(AppRoutes.dashboard);
           }),
     ];
     return Drawer(
@@ -106,89 +165,103 @@ class _CDrawerState extends State<CDrawer> {
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(45), bottomRight: Radius.circular(45))),
       backgroundColor: AppColors.orange,
-      child: Padding(
-        padding: const EdgeInsets.all(kPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: kPadding,
+      child: Stack(
+        children: [
+          SizedBox(
+            height: dheight,
+            child: Image.asset(
+              'assets/Images/drawer_bg.png',
+              fit: BoxFit.fill,
+              height: dheight,
+              width: double.maxFinite,
             ),
-            cBounce(
-              onPressed: () {
-                Get.back();
-                Get.toNamed(AppRoutes.profile);
-              },
-              child: Center(
-                child: Row(
-                  children: [
-                    Hero(
-                      tag: "ProfilePhoto",
-                      child: Image.asset(
-                        ImageConstant.dummyPerson,
-                        height: 70,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Flexible(
-                      child: ctext("Ghandshyam Patel",
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Image.asset(
-                      IconConstant.rightArrow,
-                      height: 20,
-                    ),
-                  ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(kPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: kPadding,
                 ),
-              ),
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            Image.asset(
-              ImageConstant.drawerFlash,
-            ),
-            const SizedBox(
-              height: kPadding,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: List.generate(
-                      drawerTile.length,
-                      (index) => drawerTileWidget(
-                          index: index,
-                          icon: drawerTile[index].icon,
-                          title: drawerTile[index].title,
-                          isDropDown: drawerTile[index].isDropDown,
-                          onPressed: drawerTile[index].onPressed,
-                          items: drawerTile[index].items)),
+                cBounce(
+                  onPressed: () {
+                    Get.back();
+                    Get.toNamed(AppRoutes.profile);
+                  },
+                  child: Center(
+                    child: Row(
+                      children: [
+                        Hero(
+                          tag: "ProfilePhoto",
+                          child: Image.asset(
+                            ImageConstant.dummyPerson,
+                            height: 70,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Flexible(
+                          child: ctext("Ghandshyam Patel",
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Image.asset(
+                          IconConstant.rightArrow,
+                          height: 20,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Image.asset(
+                  ImageConstant.drawerFlash,
+                ),
+                const SizedBox(
+                  height: kPadding,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: List.generate(
+                          drawerTile.length,
+                          (index) => drawerTileWidget(
+                              index: index,
+                              icon: drawerTile[index].icon,
+                              title: drawerTile[index].title,
+                              isDropDown: drawerTile[index].isDropDown,
+                              onPressed: drawerTile[index].onPressed,
+                              items: drawerTile[index].items)),
+                    ),
+                  ),
+                ),
+                Image.asset(
+                  ImageConstant.drawerFlash,
+                  height: kPadding,
+                ),
+                drawerTileWidget(
+                  index: 100,
+                  icon: IconConstant.logout,
+                  title: "Logout",
+                  onPressed: () async {
+                    await box.clear();
+                    await Get.offAllNamed(AppRoutes.login);
+                  },
+                )
+              ],
             ),
-            Image.asset(
-              ImageConstant.drawerFlash,
-              height: kPadding,
-            ),
-            drawerTileWidget(
-              index: 100,
-              icon: IconConstant.logout,
-              title: "Logout",
-              onPressed: () async {
-                await box.clear();
-                await Get.offAllNamed(AppRoutes.login);
-              },
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

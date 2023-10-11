@@ -42,6 +42,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Travel CRM',
+      scrollBehavior: const ScrollBehavior()
+          .copyWith(physics: const BouncingScrollPhysics()),
       theme: ThemeData(
               primarySwatch: Colors.orange,
               colorScheme: ColorScheme.fromSwatch(

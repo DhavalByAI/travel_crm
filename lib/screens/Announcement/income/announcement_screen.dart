@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:travel_crm/core/constants/constants.dart';
+
 import 'package:travel_crm/widgets/sub_widgets/c_card.dart';
 import 'package:travel_crm/widgets/sub_widgets/c_dropdown.dart';
 import 'package:travel_crm/widgets/sub_widgets/cbutton.dart';
@@ -11,7 +11,6 @@ import 'package:travel_crm/widgets/sub_widgets/ctextfield_common.dart';
 import 'package:travel_crm/widgets/sub_widgets/list_view_pegination.dart';
 
 import '../../../core/utils/app_colors.dart';
-import '../../../core/utils/date_conversion.dart';
 import '../../../core/utils/image_constant.dart';
 import '../../../widgets/main_widgets/btm_nav_bar.dart';
 import '../../../widgets/main_widgets/drawer.dart';
@@ -20,10 +19,10 @@ import '../../../widgets/sub_widgets/c_bounce.dart';
 import '../../../widgets/sub_widgets/ctext.dart';
 import '../../../widgets/sub_widgets/ctextfield.dart';
 import '../../../widgets/sub_widgets/text_with_heading.dart';
-import 'income_controller.dart';
+import 'announcement_controller.dart';
 
-class IncomeScreen extends StatelessWidget {
-  IncomeScreen({super.key});
+class AnnScreen extends StatelessWidget {
+  AnnScreen({super.key});
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
   final ScrollController scrollController = ScrollController();
@@ -34,12 +33,13 @@ class IncomeScreen extends StatelessWidget {
       backgroundColor: AppColors.scafflodBackground,
       appBar: AppBar(
           iconTheme: const IconThemeData(size: 30, color: Colors.black),
-          title: ctext("Income", fontSize: 20, fontWeight: FontWeight.w700),
+          title:
+              ctext("Announcement", fontSize: 20, fontWeight: FontWeight.w700),
           centerTitle: true,
           elevation: 0,
           backgroundColor: AppColors.scafflodBackground),
       bottomNavigationBar: btmNavBar(context),
-      body: GetBuilder<IncomeController>(
+      body: GetBuilder<AnnController>(
         initState: (_) {},
         builder: (_) {
           if (_.dataList.isNotEmpty) {
@@ -94,9 +94,8 @@ class IncomeScreen extends StatelessWidget {
                     const SizedBox(
                       height: 16,
                     ),
-                    cButton("+ Add Income", onTap: () {
+                    cButton("+ Add Announcement", onTap: () {
                       _.selectedFrom = null;
-                      _.selectedCat = null;
                       _.bankList.isEmpty
                           ? _
                               .getBank()
@@ -110,9 +109,6 @@ class IncomeScreen extends StatelessWidget {
                         shrinkWrap: true,
                         controller: scrollController,
                         itemBuilder: (context, index) {
-                          int tmp = _.catList.indexWhere((element) =>
-                              element.id ==
-                              int.parse(_.dataList[index]['category_id']));
                           return cCard(
                               child: Padding(
                             padding: const EdgeInsets.all(16),
@@ -126,19 +122,12 @@ class IncomeScreen extends StatelessWidget {
                                         _.dataList[index]['date'].toString(),
                                     title: "Date"),
                                 textWithHeading(
-                                    subTitle: _.dataList[index]['bank_name']
+                                    subTitle: _.dataList[index]['user_name']
                                         .toString(),
-                                    title: "Bank"),
+                                    title: "User Name"),
                                 textWithHeading(
-                                    subTitle:
-                                        tmp >= 0 ? _.catList[tmp].name : '-',
-                                    title: "Type"),
-                                textWithHeading(
-                                    subTitle: _.dataList[index]['amount'],
-                                    title: "Amount"),
-                                textWithHeading(
-                                    subTitle: _.dataList[index]['note'],
-                                    title: "Note"),
+                                    subTitle: _.dataList[index]['title'],
+                                    title: "Title"),
                                 widgetWithHeading(
                                     title: "Status",
                                     subTitle: cCard(
@@ -153,13 +142,10 @@ class IncomeScreen extends StatelessWidget {
                                               top: 4, left: 8, right: 8),
                                           child: ctext(
                                               _.dataList[index]['status'] == '1'
-                                                  ? "Active"
-                                                  : "In-Active",
+                                                  ? "Readed"
+                                                  : "Unreaded",
                                               color: Colors.white),
                                         ))),
-                                textWithHeading(
-                                    subTitle: _.dataList[index]['by'],
-                                    title: "By"),
                                 widgetWithHeading(
                                   bottomSpace: 0,
                                   title: "Action",
@@ -172,11 +158,6 @@ class IncomeScreen extends StatelessWidget {
                                                   element.id ==
                                                   int.parse(_.dataList[index]
                                                       ['bank_id']));
-                                          int tempCat = _.catList.indexWhere(
-                                              (element) =>
-                                                  element.id ==
-                                                  int.parse(_.dataList[index]
-                                                      ['category_id']));
                                           _.amount.text = _.dataList[index]
                                                   ['amount']
                                               .toString();
@@ -185,8 +166,6 @@ class IncomeScreen extends StatelessWidget {
                                               .toString();
                                           _.selectedFrom =
                                               tempFrom >= 0 ? tempFrom : null;
-                                          _.selectedCat =
-                                              tempCat >= 0 ? tempCat : null;
                                           updateData(
                                             _,
                                             context: context,
@@ -291,16 +270,13 @@ class IncomeScreen extends StatelessWidget {
     );
   }
 
-  addData(BuildContext context, IncomeController _) {
+  addData(BuildContext context, AnnController _) {
     _.selectedFrom = null;
-    _.selectedCat = null;
     _.amount.clear();
     _.note.clear();
-    _.date.text = convertDate(
-        date: DateTime.now().toString(), format: DateFormat('yyyy-MM-dd'));
     List<Widget> addBank = [
       cTextField(
-          title: "Bank",
+          title: "Select User/Staff",
           padding: const EdgeInsets.all(0),
           textField: cDropDown(
             borderColor: Colors.transparent,
@@ -311,50 +287,21 @@ class IncomeScreen extends StatelessWidget {
             },
           )),
       cTextField(
-          title: "Income Type",
-          padding: const EdgeInsets.all(0),
-          textField: cDropDown(
-              value: null,
-              borderColor: Colors.transparent,
-              fillColor: const Color.fromRGBO(0, 0, 0, 0),
-              items: List.generate(_.catList.length, (i) => _.catList[i].name),
-              onChanged: (val) {
-                _.selectedCat = val;
-              })),
-      cTextField(
-          title: "Income Amount",
+          title: "Title",
           textField: cTextFieldCommon(
-            textInputType: TextInputType.number,
             controller: _.amount,
           )),
       cTextField(
-          title: "Opening Date",
+          title: "Content",
           textField: cTextFieldCommon(
-            controller: _.date,
-            onTap: () {
-              showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2020, 5, 1),
-                lastDate: DateTime.now(),
-              ).then((date) {
-                if (date != null) {
-                  _.date.text = convertDate(
-                      date: date.toString(), format: DateFormat('yyyy-MM-dd'));
-                }
-              });
-            },
-          )),
-      cTextField(
-          title: "Note",
-          textField: cTextFieldCommon(
+            maxLines: 5,
             controller: _.note,
           )),
     ];
 
     bottomSheet(
         context: context,
-        title: "Add Income",
+        title: "Add Announcement",
         controller: scrollController,
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -384,12 +331,10 @@ class IncomeScreen extends StatelessWidget {
                   const SizedBox(
                     width: 16,
                   ),
-                  cButton("Add Income", onTap: () {
+                  cButton("Add Announcement", onTap: () {
                     _.selectedFrom == null
-                        ? EasyLoading.showError("Please Select Bank")
-                        : _.selectedCat == null
-                            ? EasyLoading.showError("Please Select Income Type")
-                            : _.addAPI();
+                        ? EasyLoading.showError("Please Select User")
+                        : _.addAPI();
                   }, btnColor: AppColors.iconBG)
                 ],
               )
@@ -399,17 +344,16 @@ class IncomeScreen extends StatelessWidget {
   }
 
   updateData(
-    IncomeController _, {
+    AnnController _, {
     required BuildContext context,
     required String id_,
   }) {
     List<Widget> addBank = [
       cTextField(
-          title: "Bank",
+          title: "Select User/Staff",
           padding: const EdgeInsets.all(0),
           textField: cDropDown(
             borderColor: Colors.transparent,
-            value: _.selectedFrom,
             fillColor: const Color.fromRGBO(0, 0, 0, 0),
             items: List.generate(_.bankList.length, (i) => _.bankList[i].name),
             onChanged: (p0) {
@@ -417,50 +361,20 @@ class IncomeScreen extends StatelessWidget {
             },
           )),
       cTextField(
-          title: "Income Type",
-          padding: const EdgeInsets.all(0),
-          textField: cDropDown(
-              value: _.selectedCat,
-              borderColor: Colors.transparent,
-              fillColor: const Color.fromRGBO(0, 0, 0, 0),
-              items: List.generate(_.catList.length, (i) => _.catList[i].name),
-              onChanged: (val) {
-                _.selectedCat = val;
-              })),
-      cTextField(
-          title: "Income Amount",
+          title: "Title",
           textField: cTextFieldCommon(
-            textInputType: TextInputType.number,
             controller: _.amount,
           )),
       cTextField(
-          title: "Opening Date",
+          title: "Content",
           textField: cTextFieldCommon(
-            controller: _.date,
-            onTap: () {
-              showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2020, 5, 1),
-                lastDate: DateTime.now(),
-              ).then((date) {
-                if (date != null) {
-                  _.date.text = convertDate(
-                      date: date.toString(), format: DateFormat('yyyy-MM-dd'));
-                }
-              });
-            },
-          )),
-      cTextField(
-          title: "Note",
-          textField: cTextFieldCommon(
+            maxLines: 5,
             controller: _.note,
           )),
     ];
-
     bottomSheet(
         context: context,
-        title: "Update Income",
+        title: "Update Announcement",
         controller: scrollController,
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -490,12 +404,10 @@ class IncomeScreen extends StatelessWidget {
                   const SizedBox(
                     width: 16,
                   ),
-                  cButton("update Income", onTap: () {
+                  cButton("update Announcement", onTap: () {
                     _.selectedFrom == null
-                        ? EasyLoading.showError("Please Select Bank")
-                        : _.selectedCat == null
-                            ? EasyLoading.showError("Please Select Income Type")
-                            : _.updateAPI(id_);
+                        ? EasyLoading.showError("Please Select User")
+                        : _.updateAPI(id_);
                   }, btnColor: AppColors.iconBG)
                 ],
               )

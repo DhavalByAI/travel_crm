@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:travel_crm/screens/Price%20List/Hotel%20Price/income/hotel_price_bindings.dart';
+import 'package:travel_crm/screens/Price%20List/Hotel%20Price/income/hotel_price_screen.dart';
 import 'package:travel_crm/screens/Tasks/tasks_bindings.dart';
 import 'package:travel_crm/screens/Tasks/tasks_screen.dart';
 import 'package:travel_crm/screens/bank/all%20transaction/all_transaction_bindings.dart';
@@ -13,8 +15,8 @@ import 'package:travel_crm/screens/bank/category/category_bindings.dart';
 import 'package:travel_crm/screens/bank/category/category_screen.dart';
 import 'package:travel_crm/screens/bank/expences/expences_bindings.dart';
 import 'package:travel_crm/screens/bank/expences/expences_screen.dart';
-import 'package:travel_crm/screens/bank/income/income_bindings.dart';
-import 'package:travel_crm/screens/bank/income/income_screen.dart';
+import 'package:travel_crm/screens/Announcement/income/announcement_bindings.dart';
+import 'package:travel_crm/screens/Announcement/income/announcement_screen.dart';
 import 'package:travel_crm/screens/bank/invoice/invoice_bindings.dart';
 import 'package:travel_crm/screens/bank/invoice/invoice_screen.dart';
 import 'package:travel_crm/screens/customer/query_bindings.dart';
@@ -76,7 +78,9 @@ class AppRoutes {
   static const String viewTransaction = "/viewTransaction";
   static const String allTransaction = "/allTransaction";
   static const String invoice = "/invoice";
+  static const String annScreen = "/annScreen";
   static const String bill = "/bill";
+  static const String hotelPrice = "/hotelPrice";
 
   static const String msAgent = "/msAgent";
   static const String msDestination = "/msDestination";
@@ -139,9 +143,7 @@ class AppRoutes {
         page: () => CategoryScreen(),
         bindings: [CategoryBindings()]),
     GetPage(
-        name: incomeScreen,
-        page: () => IncomeScreen(),
-        bindings: [IncomeBindings()]),
+        name: annScreen, page: () => AnnScreen(), bindings: [AnnBindings()]),
     GetPage(
         name: expenseScreen,
         page: () => ExpencesScreen(),
@@ -200,5 +202,9 @@ class AppRoutes {
         name: invoice,
         page: () => InvoiceScreen(),
         bindings: [InvoiceBindings()]),
+    GetPage(
+        name: hotelPrice,
+        page: () => HotelPriceScreen(),
+        bindings: [HotelPriceBindings()]),
   ];
 }

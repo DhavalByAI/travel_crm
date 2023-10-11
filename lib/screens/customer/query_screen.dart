@@ -243,7 +243,7 @@ class QueryScreen extends StatelessWidget {
                                   title: "Assigned to",
                                   subTitle: cDropDown(
                                       height: 35,
-                                      hintText: "Select Assignee",
+                                      hintText: "  Select Assignee",
                                       items: [
                                         'Admin',
                                         'client',
